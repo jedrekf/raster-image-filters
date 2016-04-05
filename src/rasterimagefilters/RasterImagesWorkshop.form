@@ -70,7 +70,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="604" max="32767" attributes="0"/>
+              <EmptySpace pref="597" max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -89,21 +89,32 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="1" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="buttonSharpen" max="32767" attributes="0"/>
-                      <Component id="buttonInversion" max="32767" attributes="0"/>
-                      <Component id="buttonBrighten" max="32767" attributes="0"/>
-                      <Component id="buttonDim" max="32767" attributes="0"/>
-                      <Component id="buttonContrastEnhance" max="32767" attributes="0"/>
-                      <Component id="jButton2" max="32767" attributes="0"/>
-                      <Component id="buttonBlur" max="32767" attributes="0"/>
-                      <Component id="buttonGaussianSmoothing" max="32767" attributes="0"/>
-                      <Component id="buttonEdgeDetection" max="32767" attributes="0"/>
-                      <Component id="buttonEmboss" max="32767" attributes="0"/>
-                      <Component id="buttonCustomFilter" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="buttonUniformQuantisation" alignment="1" pref="0" max="32767" attributes="0"/>
+                              <Component id="buttonOrderedDithering" alignment="1" max="32767" attributes="0"/>
+                              <Component id="buttonSharpen" max="32767" attributes="0"/>
+                              <Component id="buttonInversion" max="32767" attributes="0"/>
+                              <Component id="buttonBrighten" max="32767" attributes="0"/>
+                              <Component id="buttonDim" max="32767" attributes="0"/>
+                              <Component id="buttonContrastEnhance" max="32767" attributes="0"/>
+                              <Component id="jButton2" max="32767" attributes="0"/>
+                              <Component id="buttonBlur" max="32767" attributes="0"/>
+                              <Component id="buttonGaussianSmoothing" max="32767" attributes="0"/>
+                              <Component id="buttonEdgeDetection" max="32767" attributes="0"/>
+                              <Component id="buttonEmboss" max="32767" attributes="0"/>
+                              <Component id="buttonCustomFilter" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -132,7 +143,13 @@
                   <Component id="buttonEmboss" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="buttonCustomFilter" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="258" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="buttonOrderedDithering" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="buttonUniformQuantisation" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="175" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -224,6 +241,27 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCustomFilterActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="project 2"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="buttonOrderedDithering">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ordered Dithering"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonOrderedDitheringActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="buttonUniformQuantisation">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Uniform Quantisation"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonUniformQuantisationActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

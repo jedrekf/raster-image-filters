@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -22,6 +24,7 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
     private RasterImage rasterImg;
     private RasterFilter rasterFilter= new RasterFilter();
     private ConvolutionFilter convolutionFilter = new ConvolutionFilter();
+    private ColorConverter colorConverter = new ColorConverter();
     private int[][] kernel;
     private int offset;
     /** Creates new form Antenna */
@@ -60,6 +63,9 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         buttonEdgeDetection = new javax.swing.JButton();
         buttonEmboss = new javax.swing.JButton();
         buttonCustomFilter = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        buttonOrderedDithering = new javax.swing.JButton();
+        buttonUniformQuantisation = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemOpen = new javax.swing.JMenuItem();
@@ -147,25 +153,49 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("project 2");
+
+        buttonOrderedDithering.setText("Ordered Dithering");
+        buttonOrderedDithering.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOrderedDitheringActionPerformed(evt);
+            }
+        });
+
+        buttonUniformQuantisation.setText("Uniform Quantisation");
+        buttonUniformQuantisation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUniformQuantisationActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
             .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(buttonSharpen, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonInversion, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonBrighten, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonDim, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonContrastEnhance, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonBlur, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonGaussianSmoothing, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonEdgeDetection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonEmboss, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(buttonCustomFilter, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(72, 72, 72)
+                        .add(jLabel1)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, buttonUniformQuantisation, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, buttonOrderedDithering, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonSharpen, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonInversion, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonBrighten, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonDim, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonContrastEnhance, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonBlur, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonGaussianSmoothing, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonEdgeDetection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonEmboss, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(buttonCustomFilter, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .add(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -192,7 +222,13 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
                 .add(buttonEmboss)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(buttonCustomFilter)
-                .addContainerGap(258, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(buttonOrderedDithering)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(buttonUniformQuantisation)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -234,7 +270,7 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(604, Short.MAX_VALUE)
+                .addContainerGap(597, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -327,6 +363,31 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         updateImage(convolutionFilter.customFilter(getPixelArrayFromBufferedImage(bufImg), kernel, anchor, offset));
     }//GEN-LAST:event_buttonCustomFilterActionPerformed
 
+    private void buttonOrderedDitheringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOrderedDitheringActionPerformed
+        OrderedDitheringDialog odd = new OrderedDitheringDialog(this, rootPaneCheckingEnabled);
+        odd.setVisible(true);
+        int shades = odd.getNoShades();
+        int kernelSize = odd.getKernelSize();
+        try {
+            updateImage(colorConverter.OrderedDithering(getPixelArrayFromBufferedImage(bufImg), kernelSize, shades));
+        } catch (Exception ex) {
+            Logger.getLogger(RasterImagesWorkshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonOrderedDitheringActionPerformed
+
+    private void buttonUniformQuantisationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUniformQuantisationActionPerformed
+        ColorQuantisationDialog cqd = new ColorQuantisationDialog(this, rootPaneCheckingEnabled);
+        cqd.setVisible(true);
+        int kRed = cqd.getkRed();
+        int kGreen = cqd.getkGreen();
+        int kBlue = cqd.getkBlue();
+        try {
+            updateImage(colorConverter.UniformQuantisation(getPixelArrayFromBufferedImage(bufImg), kRed, kGreen, kBlue));
+        } catch (Exception ex) {
+            Logger.getLogger(RasterImagesWorkshop.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonUniformQuantisationActionPerformed
+
     private Color[][] getPixelArrayFromBufferedImage(BufferedImage bufImg){
         rasterImg = new RasterImage(bufImg);
         return rasterImg.getPixelArray();
@@ -351,8 +412,11 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
     private javax.swing.JButton buttonEmboss;
     private javax.swing.JButton buttonGaussianSmoothing;
     private javax.swing.JButton buttonInversion;
+    private javax.swing.JButton buttonOrderedDithering;
     private javax.swing.JButton buttonSharpen;
+    private javax.swing.JButton buttonUniformQuantisation;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;

@@ -46,58 +46,13 @@ public class ColorConverter {
         return editedPixArr;
     }
     
-     public Color[][] UniformQuantisation(Color[][] pixArr, double kRed, double kGreen, double kBlue){
-        setupLocalImage(pixArr);
-        int r,g,b, colRed, colGreen, colBlue, finalRed = 0, finalGreen = 0, finalBlue = 0;
-        double mapRed, mapGreen, mapBlue;
-        
-        //splitting the RGB according to input data
-        int[] colorsRed = getKColors((int)kRed); int[] colorsGreen = getKColors((int)kGreen); int[] colorsBlue = getKColors((int)kBlue);
-        //mapping value
-        mapRed =Math.floor(255/kRed);
-        mapGreen =Math.floor(255/kGreen);
-        mapBlue =Math.floor(255/kBlue);
-        
-        for(int i=0; i< width; i++){
-            for(int j=0; j<height; j++){
-                r = pixArr[i][j].getRed(); g = pixArr[i][j].getGreen(); b = pixArr[i][j].getBlue();
-                //getting the interval the color belongs to
-                colRed = (int)Math.ceil((int)r/(int)mapRed);
-                colGreen = (int)Math.ceil((int)g/(int)mapGreen);
-                colBlue = (int)Math.ceil((int)b/(int)mapBlue);
-                
-                //Choosing the interval a color belongs to.
-                for(int interval = 1; interval <= kRed; interval++){
-                    if(colRed == interval){
-                        finalRed = colorsRed[interval-1];
-                        break;
-                    }
-                }
-                for(int interval = 1; interval <= kGreen; interval++){
-                    if(colGreen == interval){
-                        finalGreen = colorsGreen[interval-1];
-                        break;
-                    }
-                }
-                for(int interval = 1; interval <= kBlue; interval++){
-                    if(colBlue == interval){
-                        finalBlue = colorsBlue[interval-1];
-                        break;
-                    }
-                }
-                editedPixArr[i][j] = new Color(finalRed, finalGreen, finalBlue);
-            }
-        }
-        
-        return editedPixArr;
-    }
-     
     private int[] getKColors(int k) {
        int[] colors = new int[k];
        int step = (int)Math.ceil(255/(double)(k-1));
-       for(int i=0; i< k ; i++){
+       for(int i=0; i< k-1 ; i++){
            colors[i] = (step*i);
        }
+       colors[k-1]=255;
        return colors;
     }
     
@@ -110,7 +65,9 @@ public class ColorConverter {
             return colors[value + 1];
     }
     
-    public Color[][] OrderedDitheringAlternate(Color[][] pixArr, int n, int k) throws Exception{
+    //Ordered Dithering
+    public Color[][] OrderedDithering(Color[][] pixArr, int n, int k) throws Exception{
+        pixArr = ConvertToGrayScaleLuminosity(pixArr);
         setupLocalImage(pixArr);
         int[][] dithArr = getDitheringArray(n);
         double px = 0, colors = n*n+1, nMap = Math.ceil(255/colors), kMap = Math.ceil((double)(255/(double)(k-1)));
@@ -133,11 +90,10 @@ public class ColorConverter {
             }
         }
         return editedPixArr;
-        
     }
     
-    // BETTER AND FINAL VERSION
-    public Color[][] UniformQuantisationAlternate(Color[][] pixArr, double kRed, double kGreen, double kBlue){
+    // Uniform Quantisation
+    public Color[][] UniformQuantisation(Color[][] pixArr, double kRed, double kGreen, double kBlue){
         setupLocalImage(pixArr);
         int r,g,b, finalRed = 0, finalGreen = 0, finalBlue = 0;
         double stepRed, stepGreen, stepBlue;
@@ -163,50 +119,13 @@ public class ColorConverter {
         
         return editedPixArr;
     }
-
-    /*
-    @param k - number of colors in available palette
-    @param n - size of the matrix
-    */
-    public Color[][] OrderedDithering(Color[][] pixArr, int n, int k) throws Exception{
-        setupLocalImage(pixArr);
-        int[][] dithArr = getDitheringArray(n);
-        double px = 0, colors = n*n+1, nMap = Math.ceil(255/colors), kMap = Math.ceil((double)(255/(double)(k-1)));
-        int shade, grayShade, requiredShade, pxColorAvg, r, g, b;
-        int[] kColorsValues = getKColors(k);
-        for(int i=0; i< width; i++){
-            for(int j=0; j<height; j++){
-                // to get the relative value to set the pixels
-                r = pixArr[i][j].getRed(); g = pixArr[i][j].getGreen(); b = pixArr[i][j].getBlue();
-                pxColorAvg = (r+g+b)/3;
-                shade = (int)Math.floor(pxColorAvg/nMap);
-                requiredShade = dithArr[i%n][j%n];
-                
-                if(shade <= requiredShade){
-                    grayShade = (int)Math.ceil(pxColorAvg/kMap);
-                    if(grayShade > (k-1)) 
-                        grayShade = k-1;
-                    for(int sh = 0; sh < k; sh++){
-                        if(grayShade == sh){
-                            editedPixArr[i][j] = new Color(kColorsValues[sh], kColorsValues[sh], kColorsValues[sh]);
-                            break;
-                        }
-                    }
-                }else{
-                    editedPixArr[i][j] = white; 
-                }
-            }
-        }
-        return editedPixArr;
-        
-    }
     
+    //Just for checking what happens
     public Color[][] OrderedDitheringColor(Color[][] pixArr, int n) throws Exception{
         setupLocalImage(pixArr);
         int[][] dithArr = getDitheringArray(n);
         double px = 0, colors = n*n, nMap = 255/colors;
         int shade, requiredShade, pxColorAvg, r, g, b;
-        Color black = new Color(0,0,0), white= new Color(255, 255, 255);
         
         for(int i=0; i< width; i++){
             for(int j=0; j<height; j++){
@@ -255,5 +174,7 @@ public class ColorConverter {
                 throw new Exception("Such matrix was not prepared.");
         }
     }
+
+
 
 }

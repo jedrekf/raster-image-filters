@@ -67,8 +67,6 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         buttonOrderedDithering = new javax.swing.JButton();
         buttonUniformQuantisation = new javax.swing.JButton();
         buttonOrderedDitheringColor = new javax.swing.JButton();
-        buttonOrderedDithering2 = new javax.swing.JButton();
-        buttonUniformQuantisation2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemOpen = new javax.swing.JMenuItem();
@@ -179,20 +177,6 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
             }
         });
 
-        buttonOrderedDithering2.setText("OD2");
-        buttonOrderedDithering2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOrderedDithering2ActionPerformed(evt);
-            }
-        });
-
-        buttonUniformQuantisation2.setText("UQ2");
-        buttonUniformQuantisation2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonUniformQuantisation2ActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -220,11 +204,7 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
                             .add(buttonEdgeDetection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(buttonEmboss, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(buttonCustomFilter, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, buttonOrderedDithering2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, buttonOrderedDitheringColor, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(buttonUniformQuantisation2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -257,13 +237,9 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
                 .add(buttonOrderedDithering)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(buttonUniformQuantisation)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(buttonOrderedDithering2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(37, 37, 37)
                 .add(buttonOrderedDitheringColor)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(buttonUniformQuantisation2)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -305,7 +281,7 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(597, Short.MAX_VALUE)
+                .addContainerGap(591, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -423,18 +399,6 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonUniformQuantisationActionPerformed
 
-    private void buttonOrderedDithering2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOrderedDithering2ActionPerformed
-        OrderedDitheringDialog odd = new OrderedDitheringDialog(this, rootPaneCheckingEnabled);
-        odd.setVisible(true);
-        int shades = odd.getNoShades();
-        int kernelSize = odd.getKernelSize();
-        try {
-            updateImage(colorConverter.OrderedDitheringAlternate(getPixelArrayFromBufferedImage(bufImg), kernelSize, shades));
-        } catch (Exception ex) {
-            Logger.getLogger(RasterImagesWorkshop.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonOrderedDithering2ActionPerformed
-
     private void buttonOrderedDitheringColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOrderedDitheringColorActionPerformed
          OrderedDitheringDialog odd = new OrderedDitheringDialog(this, rootPaneCheckingEnabled);
         odd.setVisible(true);
@@ -446,19 +410,6 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
             Logger.getLogger(RasterImagesWorkshop.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonOrderedDitheringColorActionPerformed
-
-    private void buttonUniformQuantisation2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUniformQuantisation2ActionPerformed
-        ColorQuantisationDialog cqd = new ColorQuantisationDialog(this, rootPaneCheckingEnabled);
-        cqd.setVisible(true);
-        int kRed = cqd.getkRed();
-        int kGreen = cqd.getkGreen();
-        int kBlue = cqd.getkBlue();
-        try {
-            updateImage(colorConverter.UniformQuantisationAlternate(getPixelArrayFromBufferedImage(bufImg), kRed, kGreen, kBlue));
-        } catch (Exception ex) {
-            Logger.getLogger(RasterImagesWorkshop.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonUniformQuantisation2ActionPerformed
 
     private Color[][] getPixelArrayFromBufferedImage(BufferedImage bufImg){
         rasterImg = new RasterImage(bufImg);
@@ -485,11 +436,9 @@ public class RasterImagesWorkshop extends javax.swing.JFrame {
     private javax.swing.JButton buttonGaussianSmoothing;
     private javax.swing.JButton buttonInversion;
     private javax.swing.JButton buttonOrderedDithering;
-    private javax.swing.JButton buttonOrderedDithering2;
     private javax.swing.JButton buttonOrderedDitheringColor;
     private javax.swing.JButton buttonSharpen;
     private javax.swing.JButton buttonUniformQuantisation;
-    private javax.swing.JButton buttonUniformQuantisation2;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;

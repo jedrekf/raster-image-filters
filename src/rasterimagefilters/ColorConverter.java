@@ -179,14 +179,16 @@ public class ColorConverter {
                 // to get the relative value to set the pixels
                 r = pixArr[i][j].getRed(); g = pixArr[i][j].getGreen(); b = pixArr[i][j].getBlue();
                 pxColorAvg = (r+g+b)/3;
-                shade = (int)Math.ceil(pxColorAvg/(int)nMap);
+                shade = (int)Math.floor(pxColorAvg/nMap);
                 requiredShade = dithArr[i%n][j%n];
                 
                 if(shade <= requiredShade){
-                    grayShade = (int)Math.ceil(pxColorAvg/kMap);                        
-                    for(int sh = 1; sh <= k; sh++){
+                    grayShade = (int)Math.ceil(pxColorAvg/kMap);
+                    if(grayShade > (k-1)) 
+                        grayShade = k-1;
+                    for(int sh = 0; sh < k; sh++){
                         if(grayShade == sh){
-                            editedPixArr[i][j] = new Color(kColorsValues[sh-1], kColorsValues[sh-1], kColorsValues[sh-1]);
+                            editedPixArr[i][j] = new Color(kColorsValues[sh], kColorsValues[sh], kColorsValues[sh]);
                             break;
                         }
                     }

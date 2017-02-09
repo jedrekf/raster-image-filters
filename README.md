@@ -10,5 +10,7 @@
 	* sharpen
 	* edge detection
 	* emboss
-*Additionaly there is an option to create and apply a custom user defined Kernel.*
-*Creator: Jędrzej Fijałkowski*
+
+_Additionaly there is an option to create and apply a custom user defined Kernel._
+
+_Creator: Jędrzej Fijałkowski_
